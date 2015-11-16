@@ -2,6 +2,8 @@ require('angular');
 require('angular-ui-router');
 var ipc = require('ipc');
 var fse = require('fs-extra');
+var moment = require('moment');
+var _ = require('lodash');
 
 angular.module('app', [
     'ui.router',
