@@ -1,6 +1,12 @@
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 
+
+var fs = require('fs');
+var path = require('path');
+var fse = require('fs-extra');
+var ipc = require('ipc');
+
 // Report crashes to our server.
 require('crash-reporter').start();
 
@@ -20,6 +26,38 @@ app.on('window-all-closed', function() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
+
+  var dataPath = app.getPath('appData');
+  var appPath = path.join(dataPath, 'nodelink2');
+  var configFile = path.join(appPath, 'config.json');
+
+  fse.ensureDirSync(appPath);
+
+  fs.access(configFile, fs.W_OK && fs.R_OK, function(err) {
+      if (err) {
+          var defaultConfig = {
+              db: {
+                  host: 'localhost',
+                  database: 'hos',
+                  port: 3306,
+                  user: 'sa',
+                  password: 'sa'
+              }
+          };
+
+          fse.writeJsonSync(configFile, defaultConfig);
+      }
+  });
+
+  // ipc modules
+  ipc.on('get-app-path', function(event, arg) {
+      event.returnValue = appPath;
+  });
+
+  ipc.on('get-config-file', function(event, arg) {
+      event.returnValue = configFile;
+  });
+
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600});
 

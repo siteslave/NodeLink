@@ -22,10 +22,10 @@
     "url": "https://github.com/atom/electron-quick-start/issues"
   },
   "homepage": "https://github.com/atom/electron-quick-start#readme",
-
   "dependencies": {
     "angular": "^1.4.7",
     "angular-ui-router": "^0.2.15",
-    "bootstrap": "^3.3.5"
+    "bootstrap": "^3.3.5",
+    "fs-extra": "^0.26.2"
   }
 }
