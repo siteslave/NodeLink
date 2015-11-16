@@ -2,7 +2,8 @@ require('angular');
 require('angular-ui-router');
 
 angular.module('app', [
-    'ui.router'
+    'ui.router',
+    'app.controllers.Main'
   ])
   .config(function($stateProvider, $urlRouterProvider) {
 
@@ -10,7 +11,8 @@ angular.module('app', [
     $stateProvider
       .state('main', {
         url: "/",
-        templateUrl: "partials/main.html"
+        templateUrl: "partials/main.html",
+        controller: 'MainCtrl'
       })
       .state('settings', {
         url: "/settings",
